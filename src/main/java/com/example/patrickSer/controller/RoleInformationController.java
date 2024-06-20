@@ -1,5 +1,6 @@
 package com.example.patrickSer.controller;
 
+import com.example.patrickSer.DTO.RoleRequest;
 import com.example.patrickSer.Service.RoleInformationService;
 import com.example.patrickSer.model.RoleInformation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,20 @@ public class RoleInformationController {
     private RoleInformationService roleInformationService;
 
     @PostMapping
-    public void createRoleInformation(@RequestBody RoleInformation roleInformation) {
+    public String createRoleInformation(@RequestBody RoleInformation roleInformation) {
         roleInformationService.createRoleInformation(roleInformation);
+        return "创建"+roleInformation.getRoleName()+"成功";
     }
 
     @GetMapping
     public List<RoleInformation> getAllRoleInformation() {
         return roleInformationService.getAllRoleInformation();
+    }
+
+    @DeleteMapping()
+    public String deleteRoleInformation(@RequestBody RoleRequest roleRequest) {
+        System.out.println("Received ID: " + roleRequest.get_id());
+        roleInformationService.deleteRoleInformation(roleRequest.get_id());
+        return "删除" + roleRequest.get_id()+ "成功";
     }
 }
